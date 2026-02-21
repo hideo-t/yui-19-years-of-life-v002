@@ -1,0 +1,973 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>19歳の春：新しい始まり</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700&family=Zen+Kaku+Gothic+New:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg-primary: #0a0a0f;
+      --bg-secondary: #12121a;
+      --bg-card: #1a1a2e;
+      --text-primary: #e0ddd5;
+      --text-secondary: #8a8a9a;
+      --accent: #4a9eff;
+      --accent-dim: #2a5a9a;
+      --gold: #c4a35a;
+      --chapter-border: #2a2a3e;
+      --serif: 'Noto Serif JP', 'Hiragino Mincho ProN', serif;
+      --sans: 'Zen Kaku Gothic New', 'Hiragino Kaku Gothic ProN', sans-serif;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      font-family: var(--serif);
+      font-size: 17px;
+      line-height: 1.95;
+      min-height: 100vh;
+    }
+
+    /* ─── Header ─── */
+    .hero {
+      position: relative;
+      text-align: center;
+      padding: 100px 20px 80px;
+      background: linear-gradient(180deg, #1a2a4a 0%, #0f1a2f 100%);
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 50% 30%, rgba(120,180,255,0.15) 0%, transparent 70%);
+    }
+    .hero-title {
+      font-family: var(--serif);
+      font-size: clamp(1.8rem, 5vw, 3.2rem);
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: #ffffff;
+      text-shadow: 0 2px 20px rgba(100,160,255,0.3);
+      margin-bottom: 12px;
+      position: relative;
+    }
+    .hero-sub {
+      font-family: var(--sans);
+      font-size: 0.9rem;
+      color: #b0c4de;
+      letter-spacing: 0.15em;
+    }
+    .hero-line {
+      width: 60px; height: 1px;
+      background: var(--gold);
+      margin: 28px auto 0;
+    }
+
+    /* ─── Navigation ─── */
+    .nav-bar {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(10,10,15,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--chapter-border);
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      overflow-x: auto;
+      font-family: var(--sans);
+      font-size: 0.8rem;
+    }
+    .nav-bar .nav-title {
+      color: var(--gold);
+      font-weight: 700;
+      white-space: nowrap;
+      margin-right: 8px;
+    }
+    .nav-bar a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      white-space: nowrap;
+      padding: 4px 10px;
+      border-radius: 4px;
+      transition: all 0.2s;
+    }
+    .nav-bar a:hover {
+      color: var(--accent);
+      background: rgba(74,158,255,0.1);
+    }
+
+    /* ─── TOC ─── */
+    .toc {
+      max-width: 700px;
+      margin: 60px auto 40px;
+      padding: 0 20px;
+    }
+    .toc h3 {
+      font-family: var(--sans);
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+    .toc-item {
+      display: flex; align-items: center; gap: 16px;
+      padding: 14px 18px;
+      color: var(--text-primary);
+      text-decoration: none;
+      border-left: 2px solid var(--chapter-border);
+      transition: all 0.25s;
+      font-family: var(--sans);
+      font-size: 0.95rem;
+    }
+    .toc-item:hover {
+      border-color: var(--accent);
+      background: rgba(74,158,255,0.04);
+      padding-left: 24px;
+    }
+    .toc-num {
+      font-size: 0.75rem;
+      color: var(--accent-dim);
+      font-weight: 700;
+      min-width: 20px;
+    }
+
+    /* ─── Characters ─── */
+    .characters {
+      max-width: 700px;
+      margin: 40px auto 60px;
+      padding: 0 20px;
+    }
+    .characters h3 {
+      font-family: var(--sans);
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      color: var(--text-secondary);
+      margin-bottom: 20px;
+    }
+    .char-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 14px;
+    }
+    .char-card {
+      background: var(--bg-card);
+      border: 1px solid var(--chapter-border);
+      border-radius: 8px;
+      padding: 18px;
+    }
+    .char-name {
+      font-family: var(--sans);
+      font-weight: 700;
+      font-size: 1rem;
+      color: var(--gold);
+      margin-bottom: 4px;
+    }
+    .char-meta {
+      font-family: var(--sans);
+      font-size: 0.75rem;
+      color: var(--accent);
+      margin-bottom: 8px;
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+    .char-meta span {
+      background: rgba(74,158,255,0.1);
+      padding: 1px 8px;
+      border-radius: 4px;
+    }
+    .char-appearance {
+      font-size: 0.82rem;
+      color: var(--text-secondary);
+      line-height: 1.5;
+      margin-bottom: 6px;
+      border-left: 2px solid var(--chapter-border);
+      padding-left: 10px;
+    }
+    .char-desc {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    /* ─── Divider ─── */
+    .section-divider {
+      width: 40px; height: 1px;
+      background: var(--chapter-border);
+      margin: 0 auto;
+    }
+
+    /* ─── Chapter ─── */
+    .chapter {
+      max-width: 700px;
+      margin: 0 auto;
+      padding: 80px 20px;
+      border-top: 1px solid var(--chapter-border);
+    }
+    .chapter-header {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+    .chapter-number {
+      font-family: var(--sans);
+      font-size: 0.7rem;
+      letter-spacing: 0.25em;
+      color: var(--accent-dim);
+      display: block;
+      margin-bottom: 8px;
+    }
+    .chapter-title {
+      font-family: var(--serif);
+      font-size: clamp(1.3rem, 3vw, 1.8rem);
+      font-weight: 700;
+      letter-spacing: 0.05em;
+    }
+    .chapter-image {
+      margin: 0 -20px 40px;
+      border-radius: 6px;
+      overflow: hidden;
+      border: 1px solid var(--chapter-border);
+    }
+    .chapter-image img {
+      width: 100%;
+      height: auto;
+      display: block;
+      opacity: 0.92;
+    }
+    .chapter-body p {
+      margin-bottom: 1.2em;
+      text-indent: 1em;
+      text-align: justify;
+    }
+    .chapter-body p:empty {
+      display: none;
+    }
+
+    /* ─── Footer ─── */
+    .footer {
+      text-align: center;
+      padding: 60px 20px;
+      font-family: var(--sans);
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      border-top: 1px solid var(--chapter-border);
+    }
+
+    /* ─── Reading mode toggle ─── */
+    .mode-toggle {
+      position: fixed; bottom: 20px; right: 20px; z-index: 200;
+      background: var(--bg-card);
+      border: 1px solid var(--chapter-border);
+      color: var(--text-secondary);
+      font-family: var(--sans);
+      font-size: 0.75rem;
+      padding: 8px 14px;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .mode-toggle:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+
+    /* --- TTS Read Aloud --- */
+    .tts-fab {
+      position: fixed; bottom: 80px; right: 20px; z-index: 200;
+      width: 48px; height: 48px; border-radius: 50%;
+      background: var(--accent); color: #fff; border: none;
+      font-size: 22px; cursor: pointer;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+      transition: all 0.3s;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .tts-fab:hover { transform: scale(1.1); }
+    .tts-fab.speaking { background: #e74c3c; animation: tts-pulse 1.5s infinite; }
+    @keyframes tts-pulse {
+      0%,100% { box-shadow: 0 4px 16px rgba(231,76,60,0.4); }
+      50% { box-shadow: 0 4px 24px rgba(231,76,60,0.7); }
+    }
+    .tts-bar {
+      position: fixed; bottom: 0; left: 0; right: 0; z-index: 200;
+      background: rgba(20,20,30,0.95); backdrop-filter: blur(12px);
+      border-top: 1px solid var(--chapter-border);
+      padding: 10px 16px; display: none;
+      align-items: center; gap: 10px;
+      font-family: var(--sans); font-size: 0.85rem;
+    }
+    .tts-bar.active { display: flex; flex-wrap: wrap; }
+    .tts-bar button {
+      background: none; border: 1px solid var(--text-secondary);
+      color: var(--text-primary); border-radius: 6px;
+      padding: 6px 12px; cursor: pointer; font-size: 0.8rem;
+      white-space: nowrap; transition: all 0.2s;
+    }
+    .tts-bar button:hover { border-color: var(--accent); color: var(--accent); }
+    .tts-bar .tts-info {
+      flex: 1; color: var(--text-secondary);
+      overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+      min-width: 80px;
+    }
+    .tts-bar .tts-speed {
+      display: flex; align-items: center; gap: 4px;
+      color: var(--text-secondary); font-size: 0.75rem;
+    }
+    .tts-bar .tts-speed input { width: 60px; accent-color: var(--accent); }
+    body.light .tts-bar {
+      background: rgba(245,245,240,0.95); border-top-color: #ddd;
+    }
+    body.light .tts-bar button { border-color: #999; color: #333; }
+    body.light .tts-bar .tts-info { color: #666; }
+
+    /* ─── Light mode ─── */
+    body.light {
+      --bg-primary: #f5f0e8;
+      --bg-secondary: #ebe5d9;
+      --bg-card: #fff;
+      --text-primary: #2a2a2a;
+      --text-secondary: #6a6a6a;
+      --chapter-border: #d5cfc3;
+      --accent: #2563eb;
+      --accent-dim: #6b9eff;
+      --gold: #8a6d2b;
+    }
+
+    /* ─── Responsive ─── */
+    @media (max-width: 600px) {
+      body { font-size: 15px; }
+      .chapter { padding: 50px 16px; }
+    }
+
+    /* ─── Scroll progress ─── */
+    .scroll-progress {
+      position: fixed; top: 0; left: 0; z-index: 200;
+      height: 2px;
+      background: linear-gradient(90deg, var(--accent), var(--gold));
+      width: 0%;
+      transition: width 0.1s;
+    }
+  </style>
+</head>
+<body>
+  <div class="scroll-progress" id="progress"></div>
+
+  <header class="hero">
+    <h1 class="hero-title">19歳の春：新しい始まり</h1>
+    <p class="hero-sub">GENERATED WITH LOCAL AI — OLLAMA + STABLE DIFFUSION</p>
+    <div class="hero-line"></div>
+  </header>
+
+  <nav class="nav-bar">
+    <span class="nav-title">目次</span>
+    <a href="#chapter-1">第1章</a><a href="#chapter-2">第2章</a><a href="#chapter-3">第3章</a><a href="#chapter-4">第4章</a><a href="#chapter-5">第5章</a><a href="#chapter-6">第6章</a><a href="#chapter-7">第7章</a><a href="#chapter-8">第8章</a>
+  </nav>
+
+  <div class="toc">
+    <h3>— 目次 —</h3>
+        <a href="#chapter-1" class="toc-item"><span class="toc-num">1</span><span class="toc-label">新しい生活</span></a>
+        <a href="#chapter-2" class="toc-item"><span class="toc-num">2</span><span class="toc-label">高校時代の思い出</span></a>
+        <a href="#chapter-3" class="toc-item"><span class="toc-num">3</span><span class="toc-label">第3章</span></a>
+        <a href="#chapter-4" class="toc-item"><span class="toc-num">4</span><span class="toc-label">第4章</span></a>
+        <a href="#chapter-5" class="toc-item"><span class="toc-num">5</span><span class="toc-label">第5章</span></a>
+        <a href="#chapter-6" class="toc-item"><span class="toc-num">6</span><span class="toc-label">第6章</span></a>
+        <a href="#chapter-7" class="toc-item"><span class="toc-num">7</span><span class="toc-label">第7章</span></a>
+        <a href="#chapter-8" class="toc-item"><span class="toc-num">8</span><span class="toc-label">第8章</span></a>
+  </div>
+
+  <div class="characters">
+    <h3>— 登場人物 —</h3>
+    <div class="char-grid">
+      <div class="char-card">
+        <div class="char-name">桜井結衣</div>
+        <div class="char-meta"><span>主人公</span><span>19歳</span></div>
+        <div class="char-appearance">身長約160cmの小さな女性で、ショートヘアに黒縁眼鏡が印象的。普段はシンプルなカジュアルファッションを好む。</div>
+        <div class="char-desc">親切で真面目だがときどき臆病になる</div>
+      </div>
+      <div class="char-card">
+        <div class="char-name">藤原翔太郎</div>
+        <div class="char-meta"><span>サブキャラ</span><span>20歳</span></div>
+        <div class="char-appearance">長身の青年で、短い茶色い髪に青い目。いつも笑顔で控えめな性格。</div>
+        <div class="char-desc">優しくて頼りになる</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <main>
+
+    <section class="chapter" id="chapter-1">
+      <div class="chapter-header">
+        <span class="chapter-number">第1章</span>
+        <h2 class="chapter-title">新しい生活</h2>
+      </div>
+      
+      <div class="chapter-body">
+        <p>春の爽やかな風が、田舎から都会へと結衣を迎えに来た。青空には雲一つない。太陽からの光がまぶしいほど明るい昼下がりだった。古い木造家屋との別れ、新しいアパートへの道すがら、背後からは草の香りや、春を告げる花々から甘く複雑な匂いが漂ってきた。</p>
+
+        <p>「結衣さん、手伝えますか？」</p>
+        <p>若い男性の声が響いた。その口調は控えめで、しかし頼もしかった。</p>
+        <p>「藤原さん？ あら、助けていただきますね」と返事をしたのは、少し驚いていた表情を浮かべた桜井結衣だった。</p>
+
+        <p>彼女の引っ越し先である新居は、閑静な住宅街の一角に位置し、アパートの一室として落ち着きがあった。この地での新しい生活への期待と不安が心の中で渦巻いている。窓から見える空には鳥たちの飛翔があり、彼らの翼音も耳に届く。</p>
+
+        <p>「これは私の部屋ですね」とつぶやいた結衣は、玄関に入り、まず手始めに荷物を運び出すことにした。</p>
+        <p>「藤原さん、こんな重いものを持ち上げられるんですか？」</p>
+        <p>その問いかけに対して翔太郎は何事もないと笑った。「もちろん大丈夫ですよ。」</p>
+
+        <p>彼の言葉と共に、二人で机や椅子、本箱といった家具類の移動が始まった。</p>
+
+        <p>荷物の中から出てきたのは、かつて住んでいた家の思い出が詰まっていた小さな手紙だった。</p>
+        <p>「これは…」結衣は目を細めて過去を探る。「私の高校時代からの友人たちへの挨拶状です。」</p>
+
+        <p>翔太郎もまたその光景を見守りながら、「それらの言葉には、きっとそれぞれに心から思い入れがあるんだね」と口にした。</p>
+
+        <p>荷解き作業が進むにつれ、新居は少しずつ結衣自身で築いた雰囲気を帯びてきた。窓辺には青い空と雲の風景を見せる絵本や写真フレームがあった。</p>
+        <p>「これからの生活に必要なものは全て揃いましたか？」翔太郎がそう言って尋ねると、結衣は頭からその質問に対応していた。「ええ、大丈夫です。」</p>
+
+        <p>午後も半ばを過ぎ、日暮れの気配が空から徐々に入ってくる頃だった。</p>
+        <p>「もう少しで終わりですね」と翔太郎が微笑みながら言った。</p>
+
+        <p>彼ら二人の間には言葉を超えた理解があった。その作業は進むにつれて自然と音楽のように調和した。</p>
+        <p>室内では荷物を扱う手の動きがあり、外から聞こえるのは鳥たちのさえずりや車通りなど、都会ならではの生活のリズムだった。</p>
+
+        <p>「藤原さん…」結衣が最後に言った。「新しい大学でも頑張ってくださいね。」</p>
+
+        <p>空色の青は日にちとともに次第になびいていく。</p>
+        <p>窓ガラス越しには夕暮れ時の街並みがあり、それとは別な空間で新たな生活が始まる様子を仄めかしていた。</p>
+
+        <p>その日曜日の終わりに近づきつつも、二人には互いへの感謝の気持ちが残っていた。そして彼らにとってそれぞれ新しい始まりはここから刻まれるのだ。</p>
+        <p>結衣一人だけの日常が今度は、また別の形で続いている。</p>
+
+        <p>窓からの光が薄れていったとき、翔太郎と別れた結衣は静かな室内に立ち尽くした。「この部屋…新しくなった」とその言葉を自問しながら。</p>
+      </div>
+    </section>
+    <section class="chapter" id="chapter-2">
+      <div class="chapter-header">
+        <span class="chapter-number">第2章</span>
+        <h2 class="chapter-title">高校時代の思い出</h2>
+      </div>
+      
+      <div class="chapter-body">
+        <p>春の薄暮、陽が傾き始めた校庭。桜の花びらが地面に散り始めている。風が心地よく肌を撫でる。少し遠くからかすかな少年少女たちの笑い声と走る足音が聞こえてくる。</p>
+
+        <p>結衣は古い木造校舎の一室、教室の中にいた。窓際に立つ彼女には、外を見張るよりも内側に視線を向けさせてしまう何かがあった。机上には高校時代の写真が並べられている。友人たちと笑顔で過ごした日々。それらは、懐かしさと共に結衣の胸中に広がっていく。</p>
+
+        <p>「桜井さん！」</p>
+
+        <p>後ろから聞こえてきた声に振り返ると、そこには中学からの親友・加藤理恵子が立っていた。「あっ、こんにちは！」久々の再会に笑顔になる。二人はすぐに教室を出て近所のお茶屋に向かう。</p>
+
+        <p>店に入りながら、「結衣ちゃん、変わってないね」と言ってくると、「いや〜、みんなもずいぶん大人っぽくなってるじゃない」「でも理恵子さんは昔と同じだよ」お互いに言い合って笑った。テーブルの上には季節限定の桜茶が並び始めていた。</p>
+
+        <p>「そう言えばさ、翔太は？」</p>
+
+        <p>結衣が問うと、「あいつなら今頃はどこかでバイトしてるんじゃない」「去年からずっと忙しそうだよ」理恵子に言われて、結衣も少しの間考える。彼からの手紙や電話があり、たまに出逢って話すこともあったものの、近況についてはいつも少々曖昧なままだった。</p>
+
+        <p>「翔太とは最近会った？」</p>
+
+        <p>「えぇ、先週くらいかなぁ」「引っ越し準備を一緒にしたみたいだよ」理恵子の言葉に結衣は頷く。彼が手伝ってくれた日々も思い出される。「あいつら変わらずさ、優しくて頼りになるんだよね」と続けられた。</p>
+
+        <p>「そういえば、あの日のこと覚えてる？」</p>
+
+        <p>二人揃って思い出話を始めると、「うん」「そうだよ！」と同時に言葉を重ねて笑った。春の終わり近くに学校の壁際で一緒に見た流星群。「高校最後の夜に見つけたから、特に印象的だったよね」結衣が言うと理恵子も頷きながら言った。</p>
+
+        <p>「それ以来さっぱり星を見なくなった」「そうなんだよ…でもまたちゃんと見てみたい」</p>
+
+        <p>二人は語り合ううちに日暮れ時を忘れていた。店外では桜の花びらが柔らかく風に舞い、光と影が交差する。「これからも会えるよね？」理恵子から言われると、「もちろんだよ」「ずっとだね」彼女は頷いて答えた。</p>
+
+        <p>店内に戻り、二人は何度もうなずき合って別れた。結衣一人になって外を歩いていると、遠くの教会から鐘が鳴る音も聞こえてきた。春日暮れに響くその声は、日々新しいことに挑戦しようとしている彼女にとって、心地よく感じられた。</p>
+
+        <p>路肩の桜並木を行き交う人々や自転車を見つめながら歩いていると、「ここから見える景色は」という理恵子の言葉が脳裏をよぎる。春風に包まれた町全体を眺めて、結衣は何も言うこともなく頷いた。</p>
+
+        <p>遠くの方で音楽の練習が始まる。「今日は一日、過ごすことができて良かったな…」彼女はそう思いながら歩み続けた。</p>
+      </div>
+    </section>
+    <section class="chapter" id="chapter-3">
+      <div class="chapter-header">
+        <span class="chapter-number">第3章</span>
+        <h2 class="chapter-title">第3章</h2>
+      </div>
+      
+      <div class="chapter-body">
+        <p>朝の光がベランダ越しに部屋を優しく包み込む。春風が窓枠を這い、外から静かな花粉の匂いと爽やかさを持って侵入する。結衣は寝返りを打ち、瞼を開く。時計を見るとまだ朝7時の刻。だが彼女の中には既に一日が始まった気がしてならない。</p>
+
+        <p>「お母さん」</p>
+        <p>声に出すが小さすぎて自覚しかない。</p>
+        <p>母親の姿を探しながら起き上がり、ベッドから足を滑らせるように降りる。</p>
+        <p>昨日再会した理恵子との約束はもう少し先だが、今はその前に進むべきことがある。</p>
+        <p>玄関で靴を入れ替え、結衣は小さな声で自分の背後を見つめる。</p>
+
+        <p>友人のことを思い出す。彼の近況を伝えるメールが返ってきたばかりだ。</p>
+        <p>これから何が始まるのかわからないけど、一緒に頑張ろうと心の中で呟く。</p>
+
+        <p>家を出るときにはまだ薄曇りだった空は、いつしか青みがかって明るさを取り戻している。歩道に並ぶ桜の木々が花びらを散らせ、春風と共に軽やかに舞う。</p>
+        <p>彼女は小さな足音で公園に向かいながら、懐から携帯電話を取り出した。</p>
+
+        <p>「もしもし」</p>
+        <p>翔太の声が耳元に入る。穏やかな笑顔と連絡先情報だけが伝わってくる。</p>
+        <p>「今、歩いてるところです」</p>
+
+        <p>「朝早いね結衣ちゃん。また何か考えたんだろ？」</p>
+
+        <p>「うん。考えてみたくて」</p>
+
+        <p>電話を切った後で結衣は静かに息を吐く。</p>
+
+        <p>彼女は公園のベンチに座り込み、手帳を開いた。</p>
+        <p>ここ最近ずっと迷い続けていることについて書き連ねる。</p>
+        <p>それぞれの選択肢とその先にある未来像。文字数が増えれば増えるほど薄暗さが心の中から消えていくようだった。</p>
+
+        <p>「これなら大丈夫」</p>
+        <p>自分がそう呟くように、結衣はページを閉じた。</p>
+        <p>新たな決断が出来上がった瞬間。</p>
+
+        <p>公園の周囲では朝の人波が始まる。ベビーカーが行き交い、犬の散歩をする人たちもちらほらと姿を見せる。</p>
+        <p>彼女は立ち上がり、前を見据えて歩き出す。</p>
+
+        <p>「これからだ」</p>
+        <p>結衣は口元に笑みを浮かべたまま、春の光の中で足取り続ける。</p>
+      </div>
+    </section>
+    <section class="chapter" id="chapter-4">
+      <div class="chapter-header">
+        <span class="chapter-number">第4章</span>
+        <h2 class="chapter-title">第4章</h2>
+      </div>
+      
+      <div class="chapter-body">
+        <p>春の朝、薄い霧が街に浮かんでいた。桜の花びらが地面を赤く染めている。結衣は公園を歩きながら、自分の足音と鳥の声だけを耳にする。手帳を開いてページを指さし、一息つく。</p>
+
+        <p>彼女は何度もこの名前を見つめる。その視線が曖昧な表情に揺れ動く。</p>
+
+        <p>公園ベンチに座り込んだ結衣は、ゆっくりと深呼吸した。「もう決めたわ」と呟きながら立ち上がり、歩み出す。日差しが肌を温めている。</p>
+
+        <p>「行こうか」</p>
+
+        <p>空には雲一つない。眩しいほど青い天井が広がっている。</p>
+        <p>彼女は家路を選んだ道端に迷子の猫を見かけた。「大丈夫？」と問いかける結衣に、黒猫は僅かな動きで答えたように見えた。</p>
+
+        <p>小さな声「助けて…」</p>
+
+        <p>結衣は猫を抱き上げて駆け足で近所の中学校へ向かう。保健室の看板を見つけ、扉を開いた。</p>
+        <p>女性教師が驚いて顔を見せた。「これはどうしたんですか？」「迷子です」と答える結衣。</p>
+
+        <p>「誰からも連れて行かれなそうですね…」</p>
+
+        <p>「はい」</p>
+
+        <p>猫を預けて戻る道すがら、その背後で音楽の演奏が始まった。軽やかなリズムが聞こえてくる。</p>
+        <p>彼女は立ち止まり振り返った。「これなら大丈夫」という確信と共に、手帳を見つめている。</p>
+
+        <p>「頑張ろう」</p>
+
+        <p>春爛漫な花々に囲まれた公園に戻り、結衣はまたベンチで座った。桜の木が揺れて花びらを散らす。</p>
+        <p>遠くから友人の声。「これを持っていって」と藤原翔太郎が近づいてくる。</p>
+
+        <p>「そうだな…それと新しい決断のお祝いに、この本もどうだ？」</p>
+
+        <p>「ありがとう」</p>
+
+        <p>二人は公園の端まで歩き続けた。青空に向かって。</p>
+        <p>結衣の心の中では、「これでいい」という声が聞こえていた。</p>
+
+        <p>彼女は何度もうつむいて手帳を見つめ、再び顔を上げて前に進み出した。「これからも」と口ずさんだように見えた。</p>
+
+        <p>「行こう」</p>
+
+        <p>公園から見える街路は遠くまで続いていた。結衣の足取りは決意に満ちていた。</p>
+        <p>彼女の背後で風が吹き、桜の花びらを舞わせた。</p>
+
+        <p>空高く昇る太陽を見上げながら、「これからも」と小さな声で呟いて歩み続ける少女の姿があった。</p>
+        <p>公園の端から消えていくその背中は、春と共に静かに大きく開かれている。</p>
+        <p>手帳を開く音が聞こえた。ページを指さす指先。</p>
+
+        <p>「これなら大丈夫」</p>
+      </div>
+    </section>
+    <section class="chapter" id="chapter-5">
+      <div class="chapter-header">
+        <span class="chapter-number">第5章</span>
+        <h2 class="chapter-title">第5章</h2>
+      </div>
+      
+      <div class="chapter-body">
+        <p>陽が昇った春の朝、桜吹雪が公園に舞い落ちている。遠ざかる足音と鳥のさえずりだけが聞こえる静けさの中、結衣は手帳を開きページを指し示す。</p>
+
+        <p>「これからも」</p>
+
+        <p>彼女が口ずさんだ言葉と同じフレーズで、青白い紙面には新学期が始まる4月から始まった日々が淡く描かれていた。線と文字に色づけられた日数たち。どれ一つ欠けることなく積み重ねられていく時間が、春の風と共に彼女の心を包んでゆく。</p>
+
+        <p>公園の片隅で出会った迷子の猫はもうどこにもいない。結衣が探し求めた新しい名前もまた、手帳に残る文字のように消えてしまったように思える。だがそれでもなお、彼女の中に何かしら確固としたものが芽生えていた。</p>
+
+        <p>友人の声が風に乗って響くと同時に、春の匂いと共に近づいてくる足音があった。「この本は？」結衣に差し出される手帳と同じ色合いの革製書籍。中には彼女自身よりも遥か古い時代を生き抜いた数々の物語たちが眠っている。</p>
+
+        <p>「これでいい」</p>
+
+        <p>頷くと、翔太郎の笑顔と共に光る青い瞳は、彼女の新たな決断への確信そのものだった。「これからも」と口ずさんだ声が公園全体に広がり、春の風と一緒に舞う桜吹雪を包み込んだ。音もなく溶け合う二人の息づかい。</p>
+
+        <p>「ありがとう」</p>
+
+        <p>結衣は本を受け取り、もう一度手帳を見つめ返す。既視感がありながら新鮮なページには新しい日付が描かれている。「この春から」新たな一章が始まる。季節と共に変化する風景を眺めて立ち尽くしながら彼女は自分の心に向き合う。</p>
+
+        <p>「迷子の猫」</p>
+
+        <p>再び足音と鳥たちのさえずりだけが聞こえる公園。ここでの出会いは偶然ではなく、何か確かなものへ繋げるものだった。「新たな決断」それ自体が次の冒険への序章となる。</p>
+        <p>結衣は手帳を閉じた。</p>
+
+        <p>「迷子の猫」</p>
+
+        <p>彼女はその言葉に思いを巡らせながら歩き出す。公園から見える街並みには既視感と新鮮さが混ざり合い、春先どおり道の匂いと共に新たな一日が始まる。「この本」「新しい決断」そして「迷子の猫」という三つのキーワードに心を預けつつ、彼女は歩き続ける。</p>
+
+        <p>陽光の中微風が吹く公園。桜の花びらが舞う中、結衣と翔太郎は手帳を受け取り合った後互いを見つめ合う。「これからも」と口ずさんで別れた二人の気配だけが残る空間に光り輝くのは春日差し。</p>
+
+        <p>「迷子の猫」</p>
+
+        <p>公園から見える街並みには既視感と新鮮さが混ざり合い、新たな一日が始まる。結衣は手帳を胸元に入れて歩き出す。彼女の中にある確信と共に新たな冒険への足取りは春光の中で更に深くなるのであった。</p>
+
+        <p>終わりのない始まりへと繋がる公園の風景。新しいページをめくるように、桜吹雪が舞い上がり続けるその空間にはただ静けさだけが残っている。</p>
+        <p>公園からは遠くで聞こえる鈴なりの木々との間奏があった。春と共に鳴り響きつつもそれはまた新たな旅立ちへの序章となる。</p>
+
+        <p>結衣は手帳を胸元に入れて、新しい決断へと歩み出すのであった。</p>
+      </div>
+    </section>
+    <section class="chapter" id="chapter-6">
+      <div class="chapter-header">
+        <span class="chapter-number">第6章</span>
+        <h2 class="chapter-title">第6章</h2>
+      </div>
+      
+      <div class="chapter-body">
+        <p>朝の光が窓ガラス越しに差し込む。冷たい布団の中で、結衣は瞼を開けた。陽射しが部屋の隅々まで柔らかな色合いを与える。静寂の中には遠くで鳴る鳥の声だけ。</p>
+
+        <p>身じろぎしてからベッドを抜け出し、足音も響かないようにゆっくりと床に置いた両手が腰にかかる重みを感じて深呼吸をする。空気が軽い心地よさがある。新学期が始まる前の朝、時間はまだ余っている。</p>
+
+        <p>小さな家の台所で、コーヒー豆の挽く香りが立ち上る。母はいつも通り、静かに朝食を用意する最中だ。「おはよう」と声をかけると母親は振り返って微笑んだ。</p>
+        <p>「今日は何しようと思ってた？」</p>
+
+        <p>結衣は何も考えずに答えた。</p>
+
+        <p>「新しいことを始めたいなと考えていて……」</p>
+
+        <p>窓から外を見渡す。家の裏庭には古い桜の木が立っている。春の訪れと共に薄ピンク色を増していく花びらは、遠くで聞こえる鳥達と同じように早朝からの日常に欠かせない。</p>
+
+        <p>彼女は自分だけのペースでゆっくりと朝食を済ませた後、家から出て近所の公園に向かった。道端にはまだ冬枯れした草が伸びているが春への準備が始まった様子だ。</p>
+        <p>「桜井さん」</p>
+        <p>その声に振り返ると、いつもの通り笑顔を浮かべて翔太郎さんが立っていた。</p>
+
+        <p>「今日から学校は休みだからさ、一緒に公園で遊ぼうと思って」</p>
+
+        <p>結衣は何度も会話の間を見ながら頷いた。彼といる時間はいつも心地よいだけではなく、何か新しい視点を与えてくれるようだった。</p>
+        <p>「でも今日は違うことにしたいな」</p>
+        <p>そう告げると翔太郎さんは少し驚き気味に目を細めたが、「それはいいね」と微笑んだ。</p>
+
+        <p>公園のベンチで独りになった結衣は鞄から手帳を取り出した。以前から書き留めてきた日常や、迷子の猫との出会いなどが詰まっている。「新しい決断」をするためにも、これから何を始めるべきか考えた。</p>
+        <p>「新しいこと……始められるかな」</p>
+
+        <p>彼女の声が風に紛れていくように、公園には春の訪れと共に新たな希望が漂っていた。小さな鳩たちさえその動きを緩めずに羽ばたく様子はまるで空から降り注ぐ光線のように美しくも優しかった。</p>
+
+        <p>結衣は手帳の中にある日々と向き合いながら考え続けた。「何か新しいことを始めよう」という言葉を胸に、彼女は何度も自身の手足が動く瞬間を見つめた。公園で見つけた迷子の猫と同じように、自分自身も進むべき道を探していた。</p>
+
+        <p>結衣はその決意と共に立ち上がった。新学期が始まる前日の午後、彼女の心には確信と期待が混じり合いながら新たなる旅路への準備を始めていた。</p>
+        <p>公園から見える街並みの先へ向けて歩き出す足音に春風が絡む。遠くで鳴る虫たちと共に、新たな一章が始まる予感があった。</p>
+
+        <p>結衣は手帳を見つめつつ、そのページを開いて新たなる旅路を記す準備をする最中だった。</p>
+        <p>公園から見える都会の景色、青空とビル群のコントラストが彼女の目には新しい希望の光のように映っていた。春風に吹かれて揺れる桜並木はまるで歓迎するように微笑んでいた。</p>
+
+        <p>結衣は何度も深呼吸を繰り返し、手帳の中にある日々と向き合いながら自身の中に宿る疑問を探した。「新しいことを始める」その決断の背後には何があるのか？それは彼女一人だけの問題ではなく、多くの人々が共通で抱えている問いでもある。</p>
+
+        <p>公園から見える街並みは遠くまで続いている。一方通行の道を進む車や通り過ぎる自転車からの音も耳に届きながら、結衣は何度もうなずいた。</p>
+        <p>「そうだよね……新しいことを始めるって決心したんだよ」</p>
+
+        <p>春風が公園から都会へと吹いていくように彼女の気持ちは新たな地平線に向かっていた。青空の下で足取りを進む人々や遠くに見える高層ビル群、それら全ては彼女にとって既知でありながら未知でもあった。</p>
+        <p>「新しいことに向けて……歩き出そう」</p>
+
+        <p>その言葉と共に結衣は何度も深呼吸を繰り返しながら公園から出て行った。春風が吹いた瞬間、遠くで鳴る鳥の声や街に響く人波の中から新たな冒険への期待を感じていた。</p>
+        <p>彼女は歩み出す足音とともに手帳を開き始めた。「新しいことを始めよう」という決断と共にそのページを新たなる旅路へと繋げる最中だった。</p>
+
+        <p>公園からは都会が広がる。遠くまで続く道の先に見えるビル群、街角で交差する人々や通りすがりの自動車からの音も耳に入ってきた。</p>
+        <p>「新しいことって……何だろう」</p>
+
+        <p>結衣は何度もうなずきながら自分の足元を見つめた。「迷子になった猫」そんな言葉を胸に初めて手帳を開いたときから始まったこの旅路は新たな一章へと続いていった。</p>
+
+        <p>公園のベンチで過ごした時間、そこから見える都会の風景。春日差しがビル群や桜並木を照らすように彼女の心には希望が生まれていた。</p>
+        <p>「新しいことに向けて……」</p>
+
+        <p>その瞬間、遠くの方角から聞こえる人波の中にも新たな冒険への期待を感じた結衣は歩き出した。</p>
+
+        <p>公園から見える都会の風景に春日差しが溶け込んでいる。青い空と白い雲が街並みを包んでいた。</p>
+        <p>「新しいことを始めるって決心したんだよね」</p>
+
+        <p>その言葉と共に彼女は何度もうなずくしかなかった。「迷子になった猫」そんな小さな存在からのメッセージは今でも胸に響き続けている。</p>
+
+        <p>結衣は手帳を開きながら公園から都会へと歩み出した。春風が吹いていくように、新たなる一章への期待も心地よく広がっていた。</p>
+        <p>遠くで鳴る虫たちと共に新たな冒険が始まる予感を彼女は何度もうなずいた。</p>
+
+        <p>青空の下で足取りを進む人々や通りすがりの人々からの声。それら全ては公園から見える都会へと繋がっていった。「新しいこと」その決断と共に始まったこの旅路は新たな地平線に向かっていた。</p>
+        <p>「これから……何が始まるんだろう」</p>
+
+        <p>結衣は何度もうなずきながら、手帳を開いて新たな一章を書き始めようとしていた。公園から見える都会の風景に春日差しが溶け込み、彼女の心には希望が生まれていた。</p>
+
+        <p>その瞬間、遠くの方角から聞こえる人波の中にも新たなる冒険への期待を感じた結衣は歩き出した。</p>
+        <p>「新しいこと……始めるんだよ」</p>
+
+        <p>公園からは都会が広がる。春風と共に新たな旅路が始まる予感を彼女は何度もうなずいた。</p>
+
+        <p>手帳を開いて、そのページに初めてペンを持った瞬間から新たなる一章への期待を感じた結衣は歩み出した。</p>
+        <p>「新しいこと……始めるんだよ」</p>
+
+        <p>公園からは都会が広がり、遠くまで続く道の先には新たな冒険への希望が見えていた。春風と共に彼女の心も新たな地平線に向かって進んでいった。</p>
+
+        <p>その瞬間から新たなる一章が始まる予感を結衣は何度もうなずきながら公園から出て行った。</p>
+        <p>「これから……何が始まるんだろう」</p>
+        <p>青空の下で足取りを進む人々や通りすがりの人々からの声。それら全ては彼女に新たな冒険への期待を感じさせていた。</p>
+
+        <p>遠くの方角から聞こえる人波の中にも新たなる旅路へと繋がる希望が見えていた結衣は何度もうなずきながら、手帳を開いて新たなる一章を書き始めようとしていた。</p>
+        <p>「新しいこと……始めるんだよ」</p>
+
+        <p>公園からは都会が広がり、遠くまで続く道の先には新たな冒険への期待が見えた。春風と共に彼女の心も新たな地平線に向かって進んでいった。</p>
+
+        <p>その瞬間から新たなる一章が始まる予感を結衣は何度もうなずきながら公園から出て行った。</p>
+      </div>
+    </section>
+    <section class="chapter" id="chapter-7">
+      <div class="chapter-header">
+        <span class="chapter-number">第7章</span>
+        <h2 class="chapter-title">第7章</h2>
+      </div>
+      
+      <div class="chapter-body">
+        <p>春の風が公園のベンチを吹き抜けていく。桜色に満開となった木々から舞い落ちる花びらと、薄曇り空からの淡い日差し。結衣は手帳を開くと、新しいページに向かってペンを持ち上げた。</p>
+        <p>「何が変わるの？」</p>
+        <p>後ろで静かな声が聞こえる。振り返ると翔太郎が立っていた。</p>
+        <p>「ただ始めたいと思って」</p>
+        <p>二人とも黙り込んだ。</p>
+        <p>風鈴のような音を奏でる桜花びらが、彼女の肩に落ちた。暖かさと冷たさの間にある微妙な感触は、春らしい不確定感そのものだ。</p>
+        <p>翔太郎は微笑んで言った。「始めるってことは、何か変わるわけ？」</p>
+        <p>結衣は何も答えずに頷いただけだった。</p>
+
+        <p>公園を出ると都会へ足早に歩み出した。人々が行き交い、車のクラクションや自転車のベル音。春らしい色鮮やかな服を着た若者が楽しげな笑顔で通り過ぎていく。</p>
+        <p>街路樹はまだ新緑だが、青空とビル群が美しく調和している。歩道脇に並ぶカフェではテラス席からコーヒーの香りが漂ってくる。</p>
+
+        <p>「迷いはない？」</p>
+        <p>後ろをついてくる翔太郎が聞く。</p>
+        <p>「あるけど」</p>
+        <p>結衣は答えた。「でも、新しいこと始めたいと思っただけだよ」</p>
+
+        <p>コンクリートとアスファルトに囲まれた都会の中にも春を感じる。それは遠くから聞こえるメロディーや人々の会話の中に隠されている。</p>
+        <p>「何か見つけた？」</p>
+        <p>翔太郎が言った。「新しいことに挑戦したいってのは、何を見つけるため？」</p>
+        <p>結衣は彼に視線を向けず、「見つける前の自分を変えたい」ただそれだけ答えた。</p>
+
+        <p>春色に染まった街の一角。小道には花壇から草木の香りが漂ってくる。</p>
+        <p>「何か始めようと思ったら、準備が必要だよな」翔太郎が言った。「新しい人生のために必要なものは？」</p>
+        <p>結衣は少し考えて、「自分を信じることかな」と答えた。</p>
+
+        <p>昼下がりになると薄曽根公園に再び戻った二人。ベンチで座って話をしていると桜の木から小鳥たちが鳴き交わし、春らしさを感じた。</p>
+        <p>「始めたらうまくいくとは限らないけど」翔太郎は言った。「でも諦めないことが大切だよ」</p>
+
+        <p>結衣は何も言わず微笑んだだけだった。彼女の視線は桜の花びらを追っていた。</p>
+
+        <p>公園から少し離れた静かな通りに、小さな文房具店があった。</p>
+        <p>店内に入り、壁一面に並ぶ色とりどりの手帳やペンを見渡すと、結衣は何冊か選び出した。「これで新しいことを始める」</p>
+
+        <p>店員が彼女へ笑顔を向けた。春風と共に伝わる暖かな光の中でその瞬間は止まった。</p>
+        <p>「新しく何か始めよう」</p>
+        <p>結衣は独り言のように言った。</p>
+
+        <p>手帳のページにペンを持つと、最初の一文が始まる。「19歳の春から」</p>
+
+        <p>青空が遠くまで広がっている。花びらが風に乗って舞い上がり、その先には何があるのか。</p>
+        <p>「これからどうする？」</p>
+        <p>翔太郎はそう聞いていた。</p>
+
+        <p>結衣は何も答えずに彼を見つめただけだった。春日の中で目を閉じると、暖かな光と新鮮な風を感じた。</p>
+
+        <p>公園の隅に置かれたベンチが夕暮れ時になって柔らかい色合いへと変化する中、二人は言葉もなく手帳を開いたまま静寂の中佇んでいた。</p>
+        <p>その一瞬だけ、時間が止まったように感じられた。春日の中で見つけた新しい始まりの予感。</p>
+
+        <p>街路樹からは薄曽根公園が近づくにつれ桜花びらと混じって小さな新芽が現れてきた。</p>
+        <p>「始めよう」</p>
+        <p>結衣は小さく言った。「何もかも初めてからだよ」</p>
+
+        <p>遠い空に咲き誇る夕焼け、木々の間を縫う風。春色を纏った都会の中へ新たな歩みが始まる。</p>
+
+        <p>公園のベンチで二人は手帳を見つめ合っていた。</p>
+        <p>その日は始まったばかりだったが、「何か新しいことに挑戦する」という決断と行動が新鮮な光りと共に彼女の心に刻まれていた。</p>
+      </div>
+    </section>
+    <section class="chapter" id="chapter-8">
+      <div class="chapter-header">
+        <span class="chapter-number">第8章</span>
+        <h2 class="chapter-title">第8章</h2>
+      </div>
+      
+      <div class="chapter-body">
+        <p>第8章</p>
+
+        <p>春の日差しは柔らかで、公園の草木が静かなざわめきを奏でる。桜並木から舞い降りる花びらが、淡いピンク色に輝く水面へと落ちていく。結衣はベンチに座り、手帳を開いたまま手紙を書こうとしている。</p>
+
+        <p>「翔太郎さん、これって何？」</p>
+        <p>彼女を見た翔太郎の笑顔には、いつも以上に暖かさが含まれていた。</p>
+        <p>「新しいページを開くための道具だよ。」</p>
+
+        <p>結衣はゆっくりと呼吸をしてから、もう一度手帳を眺めた。「これは私の決意なんだ」とつぶやき、ペンを持つ指先がかすかな震えを感じた。</p>
+
+        <p>公園には春の訪れと共に増える鳩たちが草の上に広がり、陽射しの中で砂埃舞う。二人は静寂の中、ただ手帳を眺め合うだけだった。</p>
+        <p>「でも、結衣ちゃん。何が始まるんだ？」</p>
+
+        <p>翔太郎からの問いかけが、空気の中に溶け込むように漂った。</p>
+
+        <p>結衣の視線が公園の広場に向いた。「わからないけど……新しいことを始めるって決めたの」と答えた彼女の声は小さかった。</p>
+        <p>「それがいいね」</p>
+        <p>ペンを握り締めた手に力がこもる。春風が髪を通して肌を撫で、その触れ合いの感触が温かな鼓動と共に胸の中で響く。</p>
+
+        <p>「ありがとう翔太郎さん」</p>
+
+        <p>結衣の目には暖かい笑みが浮かんでいた。</p>
+        <p>彼女は静寂の中、「新しいページ」を書き始める。黒いインクのはじけた音色があちこちから聞こえてきた。春日差しが公園に柔らかな光と影を描き出し、結衣の表情にも新たな希望が映り込んだ。</p>
+
+        <p>「翔太郎さん、一緒に来てあげて」</p>
+        <p>彼女は静かに手帳を閉じた。</p>
+        <p>「これから何が始まるのか、もう少し教えて」</p>
+
+        <p>春日差しが二人の間に優しく降り注ぐ。公園の桜並木から舞い落ちる花びらが柔らかな風に乗って空へと向かい、その美しさは遠くに消えていった。</p>
+
+        <p>結衣はベンチを離れて歩き出し、翔太郎も彼女の後ろ姿を見つめながら追いかける。</p>
+        <p>春の公園は静かで落ち着いた雰囲気の中、二人が新たな一歩へと進むことを見守っていた。</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>19歳の春：新しい始まり</p>
+    <p>Generated locally with Ollama + Stable Diffusion</p>
+  </footer>
+
+
+  <button class="tts-fab" id="ttsFab" onclick="ttsToggle()" title="Read aloud">
+    <span id="ttsFabIcon">&#x1f50a;</span>
+  </button>
+  <div class="tts-bar" id="ttsBar">
+    <button onclick="ttsPause()" id="ttsPauseBtn">&#x23f8;</button>
+    <button onclick="ttsStop()">&#x23f9;</button>
+    <button onclick="ttsPrev()">&#x23ee;</button>
+    <button onclick="ttsNext()">&#x23ed;</button>
+    <span class="tts-info" id="ttsInfo">Ready</span>
+    <span class="tts-speed">
+      <input type="range" id="ttsSpeed" min="0.5" max="2.0" step="0.1"
+             value="1.0" onchange="ttsSetSpeed(this.value)" />
+      <span id="ttsSpeedVal">1.0x</span>
+    </span>
+  </div>
+
+  <button class="mode-toggle" onclick="toggleMode()">🌗 表示切替</button>
+
+  <script>
+    // Reading mode
+    function toggleMode() {
+      document.body.classList.toggle('light');
+      localStorage.setItem('mode', document.body.classList.contains('light') ? 'light' : 'dark');
+    }
+    if (localStorage.getItem('mode') === 'light') document.body.classList.add('light');
+
+    // Scroll progress
+    window.addEventListener('scroll', () => {
+      const h = document.documentElement;
+      const pct = (h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100;
+      document.getElementById('progress').style.width = pct + '%';
+    });
+
+    // === TTS (Web Speech API) ===
+    const synth = window.speechSynthesis;
+    let ttsChs = [], ttsI = 0, ttsRate = 1.0, ttsOn = false, ttsPd = false;
+
+    document.querySelectorAll('.chapter').forEach((sec, i) => {
+      const b = sec.querySelector('.chapter-body');
+      const t = sec.querySelector('.chapter-title');
+      if (b) ttsChs.push({
+        title: t ? t.textContent : ('Ch.' + (i+1)),
+        text: b.textContent.trim(), el: sec
+      });
+    });
+
+    function ttsToggle() {
+      if (!synth) { alert('Speech not supported'); return; }
+      if (ttsOn) { ttsStop(); return; }
+      const sy = window.scrollY + window.innerHeight / 3;
+      let cl = 0;
+      ttsChs.forEach((c, i) => { if (c.el.offsetTop <= sy) cl = i; });
+      ttsI = cl; ttsOn = true; ttsPd = false;
+      document.getElementById('ttsFab').classList.add('speaking');
+      document.getElementById('ttsFabIcon').innerHTML = '&#x23f9;';
+      document.getElementById('ttsBar').classList.add('active');
+      _ttsRead();
+    }
+
+    function _ttsRead() {
+      if (ttsI >= ttsChs.length) { ttsStop(); return; }
+      synth.cancel();
+      const ch = ttsChs[ttsI];
+      document.getElementById('ttsInfo').textContent = ch.title;
+      ch.el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+      // Split by Japanese sentence endings for reliable playback
+      const sents = ch.text.match(/[^。！？
+]+[。！？]?/g) || [ch.text];
+      let si = 0;
+
+      function next() {
+        if (!ttsOn) return;
+        if (si >= sents.length) {
+          ttsI++;
+          if (ttsI < ttsChs.length) setTimeout(_ttsRead, 800);
+          else ttsStop();
+          return;
+        }
+        const u = new SpeechSynthesisUtterance(sents[si].trim());
+        u.lang = 'ja-JP'; u.rate = ttsRate;
+        const vs = synth.getVoices();
+        const jv = vs.find(v => v.lang && v.lang.startsWith('ja'));
+        if (jv) u.voice = jv;
+        u.onend = () => { si++; next(); };
+        u.onerror = () => { si++; next(); };
+        synth.speak(u);
+      }
+      next();
+    }
+
+    function ttsPause() {
+      if (!ttsOn) return;
+      if (ttsPd) {
+        synth.resume(); ttsPd = false;
+        document.getElementById('ttsPauseBtn').innerHTML = '&#x23f8;';
+      } else {
+        synth.pause(); ttsPd = true;
+        document.getElementById('ttsPauseBtn').innerHTML = '&#x25b6;';
+      }
+    }
+
+    function ttsStop() {
+      synth.cancel(); ttsOn = false; ttsPd = false;
+      document.getElementById('ttsFab').classList.remove('speaking');
+      document.getElementById('ttsFabIcon').innerHTML = '&#x1f50a;';
+      document.getElementById('ttsBar').classList.remove('active');
+      document.getElementById('ttsInfo').textContent = 'Ready';
+      document.getElementById('ttsPauseBtn').innerHTML = '&#x23f8;';
+    }
+
+    function ttsNext() { if (ttsOn && ttsI < ttsChs.length - 1) { ttsI++; _ttsRead(); } }
+    function ttsPrev() { if (ttsOn && ttsI > 0) { ttsI--; _ttsRead(); } }
+    function ttsSetSpeed(v) {
+      ttsRate = parseFloat(v);
+      document.getElementById('ttsSpeedVal').textContent = v + 'x';
+    }
+    if (synth) synth.onvoiceschanged = () => synth.getVoices();
+
+  </script>
+</body>
+</html>
